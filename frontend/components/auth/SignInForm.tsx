@@ -6,8 +6,9 @@
  * - Zod validation
  * - Error handling with toast notifications
  * - Automatic redirect to /dashboard on success
+ * - Structured error logging (T047)
  *
- * Implements T021 [P] [US1]
+ * Implements T021 [P] [US1], T047
  */
 
 'use client'
@@ -21,6 +22,7 @@ import { toast } from 'sonner'
 import { signIn } from '@/lib/auth-client'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
+import { logger } from '@/lib/logger'
 
 // Validation schema
 const signInSchema = z.object({
@@ -61,16 +63,25 @@ function SignInFormContent() {
           result.error.status === 401
             ? 'Invalid email or password'
             : result.error.message || 'Sign in failed. Please try again.'
+
+        // T047 - Log auth failures
+        logger.warn('Sign in failed', {
+          email: data.email,
+          status: result.error.status,
+          message: result.error.message,
+        })
+
         toast.error(errorMessage)
         return
       }
 
       // Success - redirect to dashboard or original destination
+      logger.info('User signed in successfully', { email: data.email })
       toast.success('Signed in successfully!')
       router.push(redirectTo)
     } catch (error) {
       // Handle unexpected errors
-      console.error('Sign in error:', error)
+      logger.error('Unexpected sign in error', { email: data.email }, error as Error)
       toast.error('An unexpected error occurred. Please try again.')
     } finally {
       setIsSubmitting(false)

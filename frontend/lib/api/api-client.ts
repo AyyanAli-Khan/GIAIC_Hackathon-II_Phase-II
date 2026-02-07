@@ -5,11 +5,13 @@
  * - Automatic JWT attachment
  * - Error handling and retry logic
  * - TypeScript type safety
+ * - Structured error logging (T047)
  *
  * @module api-client
  */
 
 import { authClient } from '@/lib/auth-client'
+import { logger } from '@/lib/logger'
 
 // ============================================================================
 // Type Definitions
@@ -77,6 +79,10 @@ async function authenticatedFetch<T>(
   const { data: tokenData, error: tokenError } = await authClient.token()
 
   if (tokenError || !tokenData?.token) {
+    logger.error('API request failed: No active session', {
+      endpoint,
+      error: tokenError,
+    })
     throw new ApiClientError('No active session', 401)
   }
 
@@ -99,6 +105,14 @@ async function authenticatedFetch<T>(
   const data = await response.json()
 
   if (!response.ok) {
+    // T047 - Log API errors with context
+    logger.error('API request failed', {
+      endpoint,
+      status: response.status,
+      method: options.method || 'GET',
+      detail: data.detail || 'Unknown error',
+    })
+
     throw new ApiClientError(
       data.detail || 'API request failed',
       response.status,

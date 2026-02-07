@@ -1,39 +1,37 @@
 /**
  * Sign In Page
  *
- * Renders the SignInForm component and link to signup.
- * Implements T019 [P] [US1]
+ * Clean sign in page with minimal branding.
  */
 
 import Link from 'next/link'
 import { SignInForm } from '@/components/auth/SignInForm'
-import { Card } from '@/components/ui/Card'
 
 export default function SignInPage() {
   return (
-    <Card className="bg-white">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[var(--color-text)] mb-2">
-          Welcome Back
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-semibold text-zinc-900 mb-2">
+          Welcome back
         </h1>
-        <p className="text-[var(--color-text-muted)]">
-          Sign in to access your todos
+        <p className="text-sm text-zinc-600">
+          Sign in to your account to continue
         </p>
       </div>
 
       <SignInForm />
 
-      <div className="mt-6 text-center text-sm">
-        <span className="text-[var(--color-text-muted)]">
+      <div className="text-center text-sm border-t border-zinc-200 pt-4">
+        <span className="text-zinc-600">
           Don't have an account?{' '}
         </span>
         <Link
           href="/signup"
-          className="text-[var(--color-primary)] hover:underline font-medium"
+          className="text-zinc-900 font-medium hover:underline"
         >
           Sign up
         </Link>
       </div>
-    </Card>
+    </div>
   )
 }

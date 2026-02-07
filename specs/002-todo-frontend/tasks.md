@@ -180,17 +180,17 @@ Phase 8: Polish & Cross-Cutting (T042-T047)
 
 ### Toggle Completion
 
-- [ ] T027 [US2] Enable checkbox interaction in TodoItem component (frontend/components/todos/TodoItem.tsx) using useToggleTodo mutation with optimistic update and rollback
+- [X] T027 [US2] Enable checkbox interaction in TodoItem component (frontend/components/todos/TodoItem.tsx) using useToggleTodo mutation with optimistic update and rollback
 
 ### Inline Editing
 
-- [ ] T028 [P] [US2] Create TodoEditForm component in frontend/components/todos/TodoEditForm.tsx with title/description inputs, Save/Cancel buttons, React Hook Form, Zod validation
-- [ ] T029 [US2] Add edit mode state to TodoItem component (frontend/components/todos/TodoItem.tsx) with toggle between display and edit views, edit button handler
-- [ ] T030 [US2] Integrate useUpdateTodo mutation in TodoEditForm (frontend/components/todos/TodoEditForm.tsx) with optimistic update and rollback
+- [X] T028 [P] [US2] Create TodoEditForm component in frontend/components/todos/TodoEditForm.tsx with title/description inputs, Save/Cancel buttons, React Hook Form, Zod validation
+- [X] T029 [US2] Add edit mode state to TodoItem component (frontend/components/todos/TodoItem.tsx) with toggle between display and edit views, edit button handler
+- [X] T030 [US2] Integrate useUpdateTodo mutation in TodoEditForm (frontend/components/todos/TodoEditForm.tsx) with optimistic update and rollback
 
 ### Visual Feedback
 
-- [ ] T031 [P] [US2] Add completion visual styles to TodoItem (frontend/components/todos/TodoItem.tsx) with strikethrough text, muted color for completed todos, checkmark animation
+- [X] T031 [P] [US2] Add completion visual styles to TodoItem (frontend/components/todos/TodoItem.tsx) with strikethrough text, muted color for completed todos, checkmark animation
 
 **Validation**:
 - Manual test: Toggle checkbox → strikethrough appears immediately, persists after refresh
@@ -215,9 +215,9 @@ Phase 8: Polish & Cross-Cutting (T042-T047)
 
 **Tasks**:
 
-- [ ] T032 [P] [US3] Create Spinner component in frontend/components/ui/Spinner.tsx with small/medium/large variants
-- [ ] T033 [US3] Add delete button to TodoItem component (frontend/components/todos/TodoItem.tsx) with confirmation dialog using window.confirm (simple approach) or modal component
-- [ ] T034 [US3] Integrate useDeleteTodo mutation in TodoItem (frontend/components/todos/TodoItem.tsx) with optimistic removal and rollback on error
+- [X] T032 [P] [US3] Create Spinner component in frontend/components/ui/Spinner.tsx with small/medium/large variants
+- [X] T033 [US3] Add delete button to TodoItem component (frontend/components/todos/TodoItem.tsx) with confirmation dialog using window.confirm (simple approach) or modal component
+- [X] T034 [US3] Integrate useDeleteTodo mutation in TodoItem (frontend/components/todos/TodoItem.tsx) with optimistic removal and rollback on error
 
 **Validation**:
 - Manual test: Delete todo → confirm → todo disappears, doesn't reappear after refresh
@@ -243,9 +243,9 @@ Phase 8: Polish & Cross-Cutting (T042-T047)
 
 **Tasks**:
 
-- [ ] T035 [US5] Add 401 error detection to API client (frontend/lib/api/api-client.ts) throwing ApiClientError with status 401
-- [ ] T036 [US5] Add global error handler in React Query hooks (frontend/lib/api/react-query-hooks.ts) to detect 401, clear session via authClient.signOut(), show toast, redirect to /signin
-- [ ] T037 [P] [US5] Add session expiry toast notification with "Your session has expired. Please sign in again." message using sonner toast library
+- [X] T035 [US5] Add 401 error detection to API client (frontend/lib/api/api-client.ts) throwing ApiClientError with status 401
+- [X] T036 [US5] Add global error handler in React Query hooks (frontend/lib/api/react-query-hooks.ts) to detect 401, clear session via authClient.signOut(), show toast, redirect to /signin
+- [X] T037 [P] [US5] Add session expiry toast notification with "Your session has expired. Please sign in again." message using sonner toast library
 
 **Validation**:
 - Simulate expired token (manually modify JWT or wait for expiration) → attempt action → toast appears → redirect to /signin
@@ -269,10 +269,10 @@ Phase 8: Polish & Cross-Cutting (T042-T047)
 
 **Tasks**:
 
-- [ ] T038 [P] [US4] Add filter state to dashboard page (frontend/app/dashboard/page.tsx) with filter buttons (All/Active/Completed)
-- [ ] T039 [P] [US4] Add sort state to dashboard page (frontend/app/dashboard/page.tsx) with sort dropdown (Date/Alphabetical)
-- [ ] T040 [US4] Integrate useFilteredTodos hook from react-query-hooks (frontend/app/dashboard/page.tsx) passing filter and sortBy props
-- [ ] T041 [P] [US4] Add filter/sort UI controls in dashboard header (frontend/app/dashboard/page.tsx) with button group for filters, dropdown for sort
+- [X] T038 [P] [US4] Add filter state to dashboard page (frontend/app/dashboard/page.tsx) with filter buttons (All/Active/Completed)
+- [X] T039 [P] [US4] Add sort state to dashboard page (frontend/app/dashboard/page.tsx) with sort dropdown (Date/Alphabetical)
+- [X] T040 [US4] Integrate useFilteredTodos hook from react-query-hooks (frontend/app/dashboard/page.tsx) passing filter and sortBy props
+- [X] T041 [P] [US4] Add filter/sort UI controls in dashboard header (frontend/app/dashboard/page.tsx) with button group for filters, dropdown for sort
 
 **Validation**:
 - Create 10 todos (mix completed/active) → filter by Active → verify only active todos show
@@ -291,18 +291,18 @@ Phase 8: Polish & Cross-Cutting (T042-T047)
 
 ### Accessibility
 
-- [ ] T042 [P] Add ARIA labels to all interactive elements (buttons, inputs, checkboxes) across all components with descriptive labels for screen readers
-- [ ] T043 [P] Add keyboard navigation support: Tab (navigate), Enter (activate), Escape (close modals/cancel edits), Space (toggle checkboxes)
-- [ ] T044 [P] Verify WCAG AA color contrast (4.5:1 for text, 3:1 for UI components) using axe DevTools or Lighthouse audit
+- [X] T042 [P] Add ARIA labels to all interactive elements (buttons, inputs, checkboxes) across all components with descriptive labels for screen readers
+- [X] T043 [P] Add keyboard navigation support: Tab (navigate), Enter (activate), Escape (close modals/cancel edits), Space (toggle checkboxes)
+- [X] T044 [P] Verify WCAG AA color contrast (4.5:1 for text, 3:1 for UI components) using axe DevTools or Lighthouse audit
 
 ### Performance
 
-- [ ] T045 Optimize bundle size with code splitting and lazy loading for non-critical components (EmptyState, modals), target < 200KB initial JS bundle
-- [ ] T046 Run Lighthouse audit and achieve Performance score > 90, Accessibility score = 100, Best Practices score > 90
+- [X] T045 Optimize bundle size with code splitting and lazy loading for non-critical components (EmptyState, modals), target < 200KB initial JS bundle
+- [X] T046 Run Lighthouse audit and achieve Performance score > 90, Accessibility score = 100, Best Practices score > 90
 
 ### Production Logging
 
-- [ ] T047 Add production error logging strategy: Integrate Sentry or LogRocket for frontend error tracking, capture unhandled promise rejections, API errors, auth failures
+- [X] T047 Add production error logging strategy: Integrate Sentry or LogRocket for frontend error tracking, capture unhandled promise rejections, API errors, auth failures
 
 **Validation**:
 - Lighthouse scores meet targets (Performance > 90, Accessibility = 100)

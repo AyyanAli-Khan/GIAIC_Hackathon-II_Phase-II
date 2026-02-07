@@ -1,14 +1,14 @@
 /**
  * Button Component
  *
- * Reusable button with multiple variants and states.
- * Follows navy blue theme and accessibility standards.
+ * Professional button with gradient variants and micro-animations.
+ * Modern SaaS design with smooth hover effects and enhanced depth.
  */
 
 import React from 'react'
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger'
+  variant?: 'primary' | 'gradient' | 'secondary' | 'danger' | 'ghost' | 'outline'
   size?: 'sm' | 'md' | 'lg'
   loading?: boolean
   children: React.ReactNode
@@ -23,25 +23,28 @@ export function Button({
   className = '',
   ...props
 }: ButtonProps) {
-  // Base styles
   const baseStyles =
-    'inline-flex items-center justify-center font-medium rounded-md transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed'
+    'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98]'
 
-  // Variant styles
   const variantStyles = {
     primary:
-      'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] focus:ring-[var(--color-primary)] shadow-sm',
+      'bg-zinc-900 text-white hover:bg-zinc-800 shadow-md hover:shadow-lg hover:scale-[1.02]',
+    gradient:
+      'bg-gradient-to-br from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-xl hover:shadow-primary/20 hover:scale-[1.02]',
     secondary:
-      'bg-transparent border-2 border-[var(--color-border)] text-[var(--color-text)] hover:bg-[var(--color-background)] hover:border-[var(--color-primary)] focus:ring-[var(--color-primary)]',
+      'bg-white border border-zinc-200 text-zinc-900 hover:bg-zinc-50 hover:border-zinc-300 shadow-sm hover:shadow-md hover:scale-[1.01]',
     danger:
-      'bg-[var(--color-danger)] text-white hover:bg-[var(--color-danger-hover)] focus:ring-[var(--color-danger)] shadow-sm',
+      'bg-red-600 text-white hover:bg-red-700 shadow-md hover:shadow-lg hover:shadow-danger/20 hover:scale-[1.02]',
+    ghost:
+      'bg-transparent text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900',
+    outline:
+      'bg-transparent border-2 border-zinc-200 text-zinc-700 hover:bg-zinc-50 hover:border-zinc-300',
   }
 
-  // Size styles
   const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg',
+    sm: 'px-3 py-2 text-xs min-h-[36px] gap-1.5',
+    md: 'px-5 py-2.5 text-sm min-h-[42px] gap-2',
+    lg: 'px-7 py-3 text-base min-h-[48px] gap-2.5',
   }
 
   const combinedClassName = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`
@@ -54,7 +57,7 @@ export function Button({
     >
       {loading && (
         <svg
-          className="animate-spin -ml-1 mr-2 h-4 w-4"
+          className="animate-spin h-4 w-4"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

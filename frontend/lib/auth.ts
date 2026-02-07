@@ -9,6 +9,8 @@
 
 import { betterAuth } from 'better-auth'
 import { nextCookies } from 'better-auth/next-js'
+import { jwt } from 'better-auth/plugins'
+import { Pool } from 'pg'
 
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL environment variable is not set')
@@ -19,10 +21,9 @@ if (!process.env.BETTER_AUTH_SECRET) {
 }
 
 export const auth = betterAuth({
-  database: {
-    provider: 'postgres',
-    url: process.env.DATABASE_URL,
-  },
+  database: new Pool({
+    connectionString: process.env.DATABASE_URL,
+  }),
 
   secret: process.env.BETTER_AUTH_SECRET,
 
@@ -45,6 +46,15 @@ export const auth = betterAuth({
     minPasswordLength: 8,
   },
 
-  // Next.js App Router integration - MUST be last in plugins array
-  plugins: [nextCookies()],
+  // Plugins: JWT for token endpoint, nextCookies for Next.js integration
+  plugins: [
+    jwt({
+      jwks: {
+        keyPairConfig: {
+          alg: 'RS256', // Use RS256 to match FastAPI backend expectations
+        },
+      },
+    }), // Enables /api/auth/token endpoint for JWT retrieval
+    nextCookies(), // MUST be last for Next.js App Router integration
+  ],
 })

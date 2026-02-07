@@ -1,13 +1,8 @@
 /**
  * Todo Form Component
  *
- * Form for creating new todos with:
- * - React Hook Form + Zod validation
- * - Fields: title (required, 1-500 chars), description (optional, 0-2000 chars), is_completed checkbox
- * - Optimistic updates via useCreateTodo mutation
- * - Preserves form input on API error for retry
- *
- * Implements T023 [P] [US1]
+ * Professional form for creating new todos with gradient submit button.
+ * Modern SaaS design with refined spacing and visuals.
  */
 
 'use client'
@@ -20,7 +15,6 @@ import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 
-// Validation schema
 const todoFormSchema = z.object({
   title: z
     .string()
@@ -61,28 +55,29 @@ export function TodoForm() {
         is_completed: data.is_completed ?? false,
       })
 
-      // Only reset form on successful creation
       reset()
     } catch (error) {
-      // Form input is preserved on error (no reset)
-      // Error toast is shown by the mutation's onError handler
       console.error('Failed to create todo:', error)
     }
   }
 
   return (
-    <Card>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <h2 className="text-lg font-semibold text-[var(--color-text)] mb-4">
-          Add New Todo
-        </h2>
+    <Card className="shadow-md">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-2 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full"></div>
+          <h2 className="text-lg font-bold text-zinc-900">
+            Create new task
+          </h2>
+        </div>
 
         <Input
           label="Title"
           type="text"
-          placeholder="e.g., Buy milk"
+          placeholder="What needs to be done?"
           error={errors.title?.message}
           required
+          aria-label="Todo title"
           {...register('title')}
         />
 
@@ -90,21 +85,23 @@ export function TodoForm() {
           label="Description"
           variant="textarea"
           rows={3}
-          placeholder="Add details about this task (optional)"
+          placeholder="Add details (optional)"
           error={errors.description?.message}
+          aria-label="Todo description (optional)"
           {...register('description')}
         />
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3 p-3 bg-zinc-50 rounded-lg border border-zinc-200">
           <input
             type="checkbox"
             id="is_completed"
-            className="w-4 h-4 rounded border-[var(--color-border)] text-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2"
+            className="w-5 h-5 rounded-md border-zinc-300 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 cursor-pointer transition-all"
+            aria-label="Mark new todo as completed"
             {...register('is_completed')}
           />
           <label
             htmlFor="is_completed"
-            className="text-sm text-[var(--color-text)]"
+            className="text-sm font-medium text-zinc-700 cursor-pointer select-none"
           >
             Mark as completed
           </label>
@@ -112,12 +109,13 @@ export function TodoForm() {
 
         <Button
           type="submit"
-          variant="primary"
-          size="md"
+          variant="gradient"
+          size="lg"
           loading={createTodoMutation.isPending}
           className="w-full"
+          aria-label="Add new todo"
         >
-          {createTodoMutation.isPending ? 'Adding...' : 'Add Todo'}
+          {createTodoMutation.isPending ? 'Adding task...' : 'Add task'}
         </Button>
       </form>
     </Card>

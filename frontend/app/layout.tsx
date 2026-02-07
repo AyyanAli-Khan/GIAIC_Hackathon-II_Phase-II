@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Todo App - Modern Task Management",
-  description: "A modern, responsive todo application with Better Auth authentication and FastAPI backend integration",
+  title: "TaskMind - Modern Task Management",
+  description: "A modern, responsive task management application built with Next.js 16 and FastAPI",
 };
 
 export default function RootLayout({

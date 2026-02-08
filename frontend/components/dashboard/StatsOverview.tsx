@@ -1,25 +1,15 @@
 import { useTodos } from '@/lib/api/react-query-hooks'
 
 export function StatsOverview() {
-    const { data: todos = [], isLoading } = useTodos()
+    const { data: todos = [], isLoading, isError } = useTodos()
 
     const total = todos.length
     const completed = todos.filter((t) => t.is_completed).length
     const active = total - completed
     const progress = total === 0 ? 0 : Math.round((completed / total) * 100)
 
-    if (isLoading) {
-        return (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                {[1, 2, 3].map((i) => (
-                    <div key={i} className="bg-white rounded-xl p-6 border border-zinc-200 shadow-sm animate-pulse">
-                        <div className="h-4 w-24 bg-zinc-100 rounded mb-4"></div>
-                        <div className="h-8 w-16 bg-zinc-200 rounded"></div>
-                    </div>
-                ))}
-            </div>
-        )
-    }
+    // Show stats immediately with 0 values instead of skeleton
+    // This prevents the cards from blocking the UI while todos load
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">

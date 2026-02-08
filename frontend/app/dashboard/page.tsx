@@ -33,18 +33,7 @@ export default function DashboardPage() {
     router.push('/')
   }
 
-  if (isPending) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-zinc-50 to-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-sm text-zinc-600 font-medium">Loading your workspace...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!session) {
+  if (!isPending && !session) {
     return null
   }
 
@@ -69,13 +58,25 @@ export default function DashboardPage() {
             </div>
             <div className="flex items-center gap-4">
               <div className="hidden sm:flex items-center gap-3 px-4 py-2 bg-zinc-50 rounded-lg border border-zinc-200">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-sm font-semibold text-white shadow-sm">
-                  {(session.user?.name || session.user?.email || 'U')[0].toUpperCase()}
-                </div>
-                <div className="hidden md:block">
-                  <p className="text-sm font-medium text-zinc-900">{session.user?.name || 'User'}</p>
-                  <p className="text-xs text-zinc-500">{session.user?.email}</p>
-                </div>
+                {session ? (
+                  <>
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-sm font-semibold text-white shadow-sm">
+                      {(session.user?.name || session.user?.email || 'U')[0].toUpperCase()}
+                    </div>
+                    <div className="hidden md:block">
+                      <p className="text-sm font-medium text-zinc-900">{session.user?.name || 'User'}</p>
+                      <p className="text-xs text-zinc-500">{session.user?.email}</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-8 h-8 bg-zinc-200 rounded-full animate-pulse"></div>
+                    <div className="hidden md:block space-y-1">
+                      <div className="h-4 w-20 bg-zinc-200 rounded animate-pulse"></div>
+                      <div className="h-3 w-28 bg-zinc-100 rounded animate-pulse"></div>
+                    </div>
+                  </>
+                )}
               </div>
               <Button
                 variant="ghost"

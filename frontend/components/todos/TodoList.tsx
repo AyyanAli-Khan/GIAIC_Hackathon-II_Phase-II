@@ -31,13 +31,8 @@ interface TodoListProps {
 }
 
 export function TodoList({ filter = 'all', sortBy = 'date' }: TodoListProps = {}) {
-  const shouldFilter = filter !== 'all' || sortBy !== 'date'
   const filteredResult = useFilteredTodos(filter, sortBy)
-  const allTodosResult = useTodos()
-
-  const { data: todos = [], isLoading, isError, error, refetch } = shouldFilter
-    ? filteredResult
-    : allTodosResult
+  const { data: todos = [], isLoading, isError, error, refetch } = filteredResult
 
   const { data: allTodos = [] } = useTodos()
 

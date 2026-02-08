@@ -27,12 +27,26 @@ export const auth = betterAuth({
 
   secret: process.env.BETTER_AUTH_SECRET,
 
+  // Base URL for production (required for cookie settings and redirects)
+  baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL,
+
+  // Trusted origins for CORS (production domain)
+  trustedOrigins: process.env.BETTER_AUTH_URL
+    ? [process.env.BETTER_AUTH_URL]
+    : undefined,
+
   session: {
     // Session expires after 7 days of inactivity
     expiresIn: 60 * 60 * 24 * 7, // 7 days in seconds
 
     // Refresh session every 24 hours (if user is active)
     updateAge: 60 * 60 * 24, // 1 day in seconds
+
+    // Cookie settings for production
+    cookieCache: {
+      enabled: true,
+      maxAge: 60 * 5, // 5 minutes
+    },
   },
 
   // JWT configuration (per spec clarification: 1 hour expiry)

@@ -78,7 +78,10 @@ function SignInFormContent() {
       // Success - redirect to dashboard or original destination
       logger.info('User signed in successfully', { email: data.email })
       toast.success('Signed in successfully!')
-      router.push(redirectTo)
+
+      // Use window.location for hard navigation to ensure session cookie is picked up
+      // This is necessary because router.push() doesn't force a full page reload
+      window.location.href = redirectTo
     } catch (error) {
       // Handle unexpected errors
       logger.error('Unexpected sign in error', { email: data.email }, error as Error)

@@ -71,7 +71,10 @@ export function SignUpForm() {
 
       // Success - redirect to dashboard
       toast.success('Account created successfully!')
-      router.push('/dashboard')
+
+      // Use window.location for hard navigation to ensure session cookie is picked up
+      // This is necessary because router.push() doesn't force a full page reload
+      window.location.href = '/dashboard'
     } catch (error) {
       // Handle unexpected errors
       console.error('Sign up error:', error)

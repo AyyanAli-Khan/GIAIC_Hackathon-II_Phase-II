@@ -67,6 +67,7 @@ export const auth = betterAuth({
         keyPairConfig: {
           alg: 'RS256', // Use RS256 to match FastAPI backend expectations
         },
+        disablePrivateKeyEncryption: true,
       },
     }), // Enables /api/auth/token endpoint for JWT retrieval
     nextCookies(), // MUST be last for Next.js App Router integration

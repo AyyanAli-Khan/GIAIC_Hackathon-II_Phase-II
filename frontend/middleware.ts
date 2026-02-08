@@ -20,7 +20,11 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Check for Better Auth session cookie
-  const sessionCookie = request.cookies.get('better-auth.session_token')
+  // In production (HTTPS), Better Auth uses __Secure- prefix
+  // In development (HTTP), it uses the unprefixed version
+  const sessionCookie =
+    request.cookies.get('__Secure-better-auth.session_token') ||
+    request.cookies.get('better-auth.session_token')
   const isAuthenticated = !!sessionCookie
 
   // Check if accessing a protected route

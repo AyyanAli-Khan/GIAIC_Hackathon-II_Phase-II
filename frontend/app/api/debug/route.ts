@@ -41,5 +41,20 @@ export async function GET(request: Request) {
     sessionResult = `error: ${String(e)}`
   }
 
-  return Response.json({ envCheck, dbStatus, cookieNames, sessionResult })
+  // Clean JWKS if requested
+  let jwksClean = 'not requested'
+  const url = new URL(request.url)
+  if (url.searchParams.get('cleanJwks') === 'true') {
+    try {
+      const { Pool } = await import('@neondatabase/serverless')
+      const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+      const result = await pool.query("DELETE FROM \"jwks\" WHERE 1=1 RETURNING id")
+      jwksClean = `deleted ${result.rowCount} rows`
+      await pool.end()
+    } catch (e) {
+      jwksClean = `error: ${String(e)}`
+    }
+  }
+
+  return Response.json({ envCheck, dbStatus, cookieNames, sessionResult, jwksClean })
 }

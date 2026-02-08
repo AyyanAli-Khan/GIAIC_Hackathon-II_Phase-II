@@ -14,4 +14,28 @@
 import { auth } from '@/lib/auth'
 import { toNextJsHandler } from 'better-auth/next-js'
 
-export const { GET, POST } = toNextJsHandler(auth)
+const handler = toNextJsHandler(auth)
+
+export const GET = async (request: Request) => {
+  try {
+    return await handler.GET(request)
+  } catch (error) {
+    console.error('[Auth API GET Error]', error)
+    return new Response(JSON.stringify({ error: String(error) }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+}
+
+export const POST = async (request: Request) => {
+  try {
+    return await handler.POST(request)
+  } catch (error) {
+    console.error('[Auth API POST Error]', error)
+    return new Response(JSON.stringify({ error: String(error) }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+}
